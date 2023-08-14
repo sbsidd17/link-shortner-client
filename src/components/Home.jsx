@@ -19,7 +19,7 @@ function Home() {
 
   async function clickHandler() {
     try {
-      const response = await axios.post("http://localhost:5453/", { url });
+      const response = await axios.post("https://sdlinks.onrender.com/", { url });
       setShortLink(response.data.shortLink);
       toast.success(response.data.msg);
       setTextToCopy(response.data.shortLink);
