@@ -1,4 +1,4 @@
-const backendUrl = "https://sdlinks.onrender.com/"
+const backendUrl = "https://sdlinks.onrender.com"
 
 export {
     backendUrl
