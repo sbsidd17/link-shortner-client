@@ -1,4 +1,4 @@
-const backendUrl = "http://localhost:5453"
+const backendUrl = "https://sdlinks.netlify.app"
 
 export {
     backendUrl
