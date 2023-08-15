@@ -36,7 +36,9 @@ function App() {
             },
           }
         );
-        setData(response.data.data)
+        if (response){
+          setData(response.data.data)
+        }
 
       } catch (error) {
         toast.error(error.response.data.msg);
