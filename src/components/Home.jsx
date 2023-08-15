@@ -50,7 +50,7 @@ function Home() {
           </div>
           <div className="flex justify-center items-center">
             <button
-              className="button bg-blue-700 text-white px-5 py-3 rounded-r-xl"
+              className="button bg-blue-700 text-white m-0 px-5 py-3 rounded-r-xl"
               onClick={clickHandler}
             >
               Short Link
