@@ -20,7 +20,13 @@ function Login() {
     try {
       const response = await axios.post(
         "https://sdlinks.onrender.com/user/login",
-        formData
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       toast.success(response.data.msg);
       const jwtToken = response.data.jwtToken;

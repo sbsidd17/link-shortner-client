@@ -27,7 +27,13 @@ function Signup() {
     try {
       const response = await axios.post(
         "https://sdlinks.onrender.com/user/signup",
-        formData
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       toast.success(response.data.msg);
       navigate("/login")
