@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { backendUrl } from "../config/config";
 
 function Signup() {
   const navigate = useNavigate()
@@ -26,7 +27,7 @@ function Signup() {
     // console.log(formData);
     try {
       const response = await axios.post(
-        "https://sdlinks.onrender.com/user/signup",
+        `${backendUrl}/user/signup`,
         formData,
         {
           withCredentials: true,

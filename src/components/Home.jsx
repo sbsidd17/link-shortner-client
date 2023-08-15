@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { backendUrl } from "../config/config";
 
 function Home() {
   const [url, setUrl] = useState("");
@@ -19,22 +20,31 @@ function Home() {
 
   async function clickHandler() {
     try {
-      const response = await axios.post("https://sdlinks.onrender.com/", { url });
+      const response = await axios.post(
+        `${backendUrl}/`,
+        { url },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setShortLink(response.data.shortLink);
       toast.success(response.data.msg);
       setTextToCopy(response.data.shortLink);
     } catch (error) {
-      console.error("Error shortening link:", error);
+      console.error("Error shortening link:", error.message);
       toast.error(error.response.data.msg);
     }
   }
   return (
-    <div className="w-[100%] flex justify-center items-center flex-col gap-10">
+    <div className="w-[100%] flex justify-center items-center flex-col gap-10 mt-20">
       <div className="text-white md:text-5xl font-semibold">
-      SHORTENING YOUR URL?
+        SHORTENING YOUR URL?
       </div>
       <div className="text-white md:text-2xl font-semibold">
-      Sure, SdLinks will do that at a mouse click
+        Sure, SdLinks will do that at a mouse click
       </div>
       {shortLink === "" ? (
         <div className="bg-white w-[75%] flex justify-between rounded-xl">
@@ -80,7 +90,9 @@ function Home() {
           </div>
 
           {copied && (
-            <span className="bg-black text-white p-2 rounded-lg fixed right-0">Copied!</span>
+            <span className="bg-black text-white p-2 rounded-lg fixed right-0">
+              Copied!
+            </span>
           )}
         </div>
       ) : (

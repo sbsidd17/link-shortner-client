@@ -2,11 +2,12 @@ import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import toast from 'react-hot-toast';
+import { backendUrl } from '../config/config';
 
 function Header({isLoggedIn, }) {
   const navigate = useNavigate()
   async function logoutHandler(){
-    const response = await axios.get("https://sdlinks.onrender.com/user/logout");
+    const response = await axios.get(`${backendUrl}/user/logout`); 
     localStorage.removeItem("jwtToken")
     toast.success(response.data.msg);
     navigate("/")
