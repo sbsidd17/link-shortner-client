@@ -23,6 +23,33 @@ function App() {
       setIsLoggedIn(true)
     }
 
+<<<<<<< HEAD
+=======
+    async function fetchData(){
+      try {
+        const response = await axios.get(
+          `${backendUrl}/user/dashboard`,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response){
+          setData(response.data.data)
+        }
+
+      } catch (error) {
+        toast.error(error.response.data.msg);
+        console.log(error.message)
+      }
+    }
+
+    fetchData()
+
+
+>>>>>>> 1c5ad8ab7596cd4946371691e0447ed78eec11e2
   },[])
 
   return (
