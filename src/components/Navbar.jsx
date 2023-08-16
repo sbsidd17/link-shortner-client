@@ -28,7 +28,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
   ];
 
   const [name, setName] = useState("UserName");
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState("https://icon-library.com/images/username-icon/username-icon-28.jpg");
 
   useEffect(() => {
     const userJSON = localStorage.getItem("user");
