@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import axios from "axios";
 import "./App.css";
 import Home from "./components/Home";
 import Login from "./pages/Login";
@@ -11,13 +10,12 @@ import Dashbaord from "./pages/Dashbaord";
 import { useEffect, useState } from "react";
 import NotFoundPage from "./pages/NotFoundPage";
 import Navbar from "./components/Navbar";
-import toast from "react-hot-toast";
-import { backendUrl } from "./config/config";
+import Profile from "./pages/Profile";
+
 
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [data, setData] = useState()
 
   useEffect(()=>{
     const jwtToken = localStorage.getItem("jwtToken")
@@ -25,32 +23,11 @@ function App() {
       setIsLoggedIn(true)
     }
 
-    async function fetchData(){
-      try {
-        const response = await axios.get(
-          `${backendUrl}/user/dashboard`,
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setData(response.data.data)
-
-      } catch (error) {
-        toast.error(error.response.data.msg);
-        console.log(error.message)
-      }
-    }
-
-    fetchData()
-
-
   },[])
+
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col">
-      <Navbar data={data} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -58,7 +35,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
-        <Route path="/dashboard" element={<Dashbaord data={data} />} />
+        <Route path="/dashboard" element={<Dashbaord />} />
+        <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

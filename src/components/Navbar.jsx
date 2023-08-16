@@ -1,32 +1,53 @@
-import { Fragment } from 'react'
+import { Fragment } from "react";
 import axios from "axios";
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import {FaBars, FaMarker} from "react-icons/fa"
-import { Link } from 'react-router-dom'
-import toast from 'react-hot-toast'
-import { backendUrl } from '../config/config';
-
-
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { FaBars, FaMarker } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { backendUrl } from "../config/config";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar({data, isLoggedIn, setIsLoggedIn}) {
+export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact Us', href: '/contact' },
-    { name: isLoggedIn === true ? ("LogOut") : ("Login"), href: isLoggedIn === true ? ("/") : ("/login") },
-    { name: isLoggedIn === true ? ("Dashboard") : ("SignUp"), href: isLoggedIn === true ? ("/dashboard") : ("/signup") },
-  ]
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Contact Us", href: "/contact" },
+    {
+      name: isLoggedIn === true ? "LogOut" : "Login",
+      href: isLoggedIn === true ? "/" : "/login",
+    },
+    {
+      name: isLoggedIn === true ? "Dashboard" : "SignUp",
+      href: isLoggedIn === true ? "/dashboard" : "/signup",
+    },
+  ];
 
-  async function signoutHandler(){
-    const response = await axios.get(`${backendUrl}/user/logout`); 
-    localStorage.removeItem("jwtToken")
+  const [name, setName] = useState("UserName");
+  const [avatar, setAvatar] = useState();
+
+  useEffect(() => {
+    const userJSON = localStorage.getItem("user");
+    if (userJSON) {
+      const user = JSON.parse(userJSON);
+      // console.log(user)
+      setName(`${user.firstName} ${user.lastName}`);
+      setAvatar(user.avatar);
+    }
+  }, []);
+
+  async function signoutHandler() {
+    const response = await axios.get(`${backendUrl}/user/logout`);
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("user");
     toast.success(response.data.msg);
-    setIsLoggedIn(false)
+    setIsLoggedIn(false);
   }
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -63,9 +84,9 @@ export default function Navbar({data, isLoggedIn, setIsLoggedIn}) {
                       <Link
                         key={item.name}
                         to={item.href}
-                        className='text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
-                        aria-current={item.current ? 'page' : undefined}
-                        onClick={item.name==="LogOut" ? signoutHandler : ''}
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                        aria-current={item.current ? "page" : undefined}
+                        onClick={item.name === "LogOut" ? signoutHandler : ""}
                       >
                         {item.name}
                       </Link>
@@ -75,7 +96,7 @@ export default function Navbar({data, isLoggedIn, setIsLoggedIn}) {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div>
-                <h2 className='text-white'>{data ? (data.firstName+" "+data.lastName): "UserName"}</h2>
+                  <h2 className="text-white">{name}</h2>
                 </div>
 
                 {/* Profile dropdown */}
@@ -85,7 +106,7 @@ export default function Navbar({data, isLoggedIn, setIsLoggedIn}) {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src={data ? data.avatar : "https://icon-library.com/images/username-icon/username-icon-28.jpg"}
+                        src={avatar}
                         alt=""
                       />
                     </Menu.Button>
@@ -100,57 +121,82 @@ export default function Navbar({data, isLoggedIn, setIsLoggedIn}) {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {isLoggedIn && <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/profile"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Your Profile
-                          </Link>
-                        )}
-                      </Menu.Item>}
-                      {isLoggedIn && <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/dashboard"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Dashboard
-                          </Link>
-                        )}
-                      </Menu.Item>}
-                      {isLoggedIn && <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/"
-                            onClick={signoutHandler}
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Sign out
-                          </Link>
-                        )}
-                      </Menu.Item>}
-                      {!isLoggedIn && <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/login"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Login
-                          </Link>
-                        )}
-                      </Menu.Item>}
-                      {!isLoggedIn && <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/signup"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            SignUp
-                          </Link>
-                        )}
-                      </Menu.Item>}
+                      {isLoggedIn && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/profile"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Your Profile
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {isLoggedIn && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/dashboard"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Dashboard
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {isLoggedIn && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/"
+                              onClick={signoutHandler}
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Sign out
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {!isLoggedIn && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/login"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Login
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {!isLoggedIn && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/signup"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              SignUp
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )}
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -166,10 +212,12 @@ export default function Navbar({data, isLoggedIn, setIsLoggedIn}) {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block rounded-md px-3 py-2 text-base font-medium"
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -179,5 +227,5 @@ export default function Navbar({data, isLoggedIn, setIsLoggedIn}) {
         </>
       )}
     </Disclosure>
-  )
+  );
 }

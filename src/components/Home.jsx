@@ -19,10 +19,11 @@ function Home() {
   };
 
   async function clickHandler() {
+    const jwtToken = localStorage.getItem("jwtToken")
     try {
       const response = await axios.post(
         `${backendUrl}/`,
-        { url },
+        { url, jwtToken },
         {
           withCredentials: true,
           headers: {

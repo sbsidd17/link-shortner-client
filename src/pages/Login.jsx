@@ -31,7 +31,9 @@ function Login() {
       );
       toast.success(response.data.msg);
       const jwtToken = response.data.jwtToken;
+      const user = JSON.stringify(response.data.user)
       localStorage.setItem("jwtToken", jwtToken)
+      localStorage.setItem("user", user)
       navigate("/")
       window.location.reload()
     } catch (error) {
