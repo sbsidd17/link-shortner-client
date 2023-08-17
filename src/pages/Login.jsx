@@ -3,9 +3,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { backendUrl } from "../config/config";
+import Loading from "../components/Loading/Loading";
+import imageUrl from '../assets/images/login.png';
 
 function Login() {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -18,6 +21,7 @@ function Login() {
   async function submitHandler(e) {
     e.preventDefault();
     // console.log(formData);
+    setLoading(true)
     try {
       const response = await axios.post(
         `${backendUrl}/user/login`,
@@ -34,20 +38,21 @@ function Login() {
       const user = JSON.stringify(response.data.user)
       localStorage.setItem("jwtToken", jwtToken)
       localStorage.setItem("user", user)
-      navigate("/")
+      navigate("/dashboard")
       window.location.reload()
     } catch (error) {
       toast.error("Something Went Wrong")
     }
+    setLoading(false)
   }
   return (
     <div>
-      <section className="bg-white dark:bg-gray-900">
+      {loading === true ? <Loading /> :<section className="bg-white dark:bg-gray-900">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
           <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
             <img
               alt="Pattern"
-              src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+              src={imageUrl}
               className="absolute inset-0 h-full w-full object-cover"
             />
           </aside>
@@ -145,7 +150,7 @@ function Login() {
             </div>
           </main>
         </div>
-      </section>
+      </section>}
     </div>
   );
 }

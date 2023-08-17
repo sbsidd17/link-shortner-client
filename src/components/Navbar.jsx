@@ -46,6 +46,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
     localStorage.removeItem("user");
     toast.success(response.data.msg);
     setIsLoggedIn(false);
+    window.location.reload()
   }
 
   return (

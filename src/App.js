@@ -23,13 +23,13 @@ function App() {
       setIsLoggedIn(true)
     }
 
-  },[])
+  },[isLoggedIn])
 
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col">
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/about" element={<About />} />
