@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { backendUrl } from "../config/config";
 import { useState } from "react";
 import { useEffect } from "react";
+import logo from '../assets/images/logo.png';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -69,13 +70,13 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    className="block h-[45px] w-auto lg:hidden"
+                    src={logo}
                     alt="Your Company"
                   />
                   <img
-                    className="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    className="hidden h-[45px] w-auto lg:block"
+                    src={logo}
                     alt="Your Company"
                   />
                 </div>
