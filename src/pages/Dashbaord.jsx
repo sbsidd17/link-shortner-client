@@ -2,7 +2,7 @@ import React from 'react'
 import { backendUrl } from "../config/config";
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { useState } from 'react';
+import { useState, iseEffect} from 'react';
 import LinkCard from '../components/LinkCard';
 import {FcLink, FcBinoculars, FcCurrencyExchange} from "react-icons/fc"
 
@@ -11,7 +11,7 @@ function Dashbaord() {
   const [data, setData] = useState()
   const [totalViews, setTotalViews] = useState(0)
 
-  (()=>{
+  useEffect(()=>{
     const jwtToken = localStorage.getItem("jwtToken")
     async function fetchData(){
       try {
@@ -45,7 +45,7 @@ function Dashbaord() {
     }
 
     fetchData()
-  })()
+  },[])
 
   
   
