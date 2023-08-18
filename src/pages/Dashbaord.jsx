@@ -58,7 +58,7 @@ function Dashbaord() {
     <div className='flex flex-col'>
       <div className='flex gap-10 text-white p-10 flex-wrap'>
           <div className='flex flex-col justify-center items-center bg-[#27293d] p-10 rounded-xl'>
-              <div className="flex flex-col md:flex-row justify-between items-center gap-10 ">
+              <div className="flex justify-between items-center gap-10 ">
                 <div className='flex flex-col gap-5'>
                   <p className='font-bold'>Total Links</p>
                   <p className='font-bold'>{data?.userLinks.length}</p>
@@ -69,7 +69,7 @@ function Dashbaord() {
               </div>
           </div>
           <div className='flex flex-col justify-center items-center bg-[#27293d] p-10 rounded-xl'>
-              <div className="flex flex-col md:flex-row justify-between items-center gap-10 ">
+              <div className="flex justify-between items-center gap-10 ">
                 <div className='flex flex-col gap-5'>
                   <p className='font-bold'>Total Views</p>
                   <p className='font-bold'>{totalViews}</p>
@@ -80,7 +80,7 @@ function Dashbaord() {
               </div>
           </div>
           <div className='flex flex-col justify-center items-center bg-[#27293d] p-10 rounded-xl'>
-              <div className="flex flex-col md:flex-row justify-between items-center gap-10 ">
+              <div className="flex justify-between items-center gap-10 ">
                 <div className='flex flex-col gap-5'>
                   <p className='font-bold'>Total Earning</p>
                   <p className='font-bold'>{(totalViews/1000).toFixed(4)} $</p>
