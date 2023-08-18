@@ -126,6 +126,20 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                       {isLoggedIn && (
                         <Menu.Item>
                           {({ active }) => (
+                            <p
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              {name}
+                            </p>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {isLoggedIn && (
+                        <Menu.Item>
+                          {({ active }) => (
                             <Link
                               to="/profile"
                               className={classNames(
