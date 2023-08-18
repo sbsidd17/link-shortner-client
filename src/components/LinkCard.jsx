@@ -32,7 +32,7 @@ function LinkCard({ linkData }) {
             Click Here
           </a>
         </div>
-        <div className="bg-[#464962] w-[75%] flex justify-between relative">
+        <div className="bg-[#464962] md:w-[75%] flex justify-between relative">
           <div className="flex justify-center items-center flex-1 p-3">
             <input
               disabled
