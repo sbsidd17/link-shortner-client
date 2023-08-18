@@ -1,18 +1,17 @@
 import React from 'react'
 import { backendUrl } from "../config/config";
-import { useEffect } from 'react'
 import axios from "axios";
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import LinkCard from '../components/LinkCard';
-import {FcLink, FcBinoculars} from "react-icons/fc"
+import {FcLink, FcBinoculars, FcCurrencyExchange} from "react-icons/fc"
 
 
 function Dashbaord() {
   const [data, setData] = useState()
   const [totalViews, setTotalViews] = useState(0)
 
-  useEffect(()=>{
+  (()=>{
     const jwtToken = localStorage.getItem("jwtToken")
     async function fetchData(){
       try {
@@ -46,7 +45,7 @@ function Dashbaord() {
     }
 
     fetchData()
-  },[])
+  })()
 
   
   
@@ -56,7 +55,7 @@ function Dashbaord() {
 
   
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col flex-wrap'>
       <div className='flex gap-10 text-white p-10'>
           <div className='flex flex-col justify-center items-center bg-[#27293d] p-10 rounded-xl'>
               <div className="flex justify-between items-center gap-10 ">
@@ -77,6 +76,17 @@ function Dashbaord() {
                 </div>
                 <div>
                     <FcBinoculars size={64} />
+                </div>
+              </div>
+          </div>
+          <div className='flex flex-col justify-center items-center bg-[#27293d] p-10 rounded-xl'>
+              <div className="flex justify-between items-center gap-10 ">
+                <div className='flex flex-col gap-5'>
+                  <p className='font-bold'>Total Earning</p>
+                  <p className='font-bold'>{(totalViews/1000).toFixed(4)} $</p>
+                </div>
+                <div>
+                    <FcCurrencyExchange size={64} />
                 </div>
               </div>
           </div>
