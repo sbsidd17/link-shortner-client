@@ -211,8 +211,9 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  as="a"
-                  href={item.href}
+                  as="Link"
+                  to={item.href}
+                  onClick={item.name === "LogOut" ? signoutHandler : ""}
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"
