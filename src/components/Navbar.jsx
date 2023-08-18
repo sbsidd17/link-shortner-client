@@ -98,7 +98,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div>
-                  <h2 className="text-white">{name}</h2>
+                  <h2 className="text-white hidden md:block">{name}</h2>
                 </div>
 
                 {/* Profile dropdown */}
@@ -209,6 +209,9 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item) => (
+               <Link
+                 to={item.href}
+                 >
                 <Disclosure.Button
                   key={item.name}
                   as="Link"
@@ -224,6 +227,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                 >
                   {item.name}
                 </Disclosure.Button>
+                 </Link>
               ))}
             </div>
           </Disclosure.Panel>
