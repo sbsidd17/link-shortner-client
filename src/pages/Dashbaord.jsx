@@ -2,7 +2,7 @@ import React from 'react'
 import { backendUrl } from "../config/config";
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { useState, iseEffect} from 'react';
+import { useState, useEffect} from 'react';
 import LinkCard from '../components/LinkCard';
 import {FcLink, FcBinoculars, FcCurrencyExchange} from "react-icons/fc"
 
