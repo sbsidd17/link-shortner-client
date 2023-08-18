@@ -22,7 +22,7 @@ function LinkCard({ linkData }) {
   };
 
   return (
-    <div className="w-full bg-[#27293d] flex p-3 justify-between items-center rounded-md text-white">
+    <div className="w-full bg-[#27293d] flex flex-col md:flex-row p-3 justify-between items-center rounded-md text-white">
       <div className="flex flex-col p-3 gap-5 flex-1">
         <div className="text-xl">{link.shortId}</div>
         <div className="text-sm">Created At : {formattedCreatedAt}</div>
